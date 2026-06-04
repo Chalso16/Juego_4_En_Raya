@@ -21,6 +21,7 @@ struct Ficha{
     int id=0;
 };
 
+//Solicitar datos
 void inicializarJuego(Jugadores& jugadores) {
     cout << "Introduzca el nombre del jugador1" << endl;
     getline(cin, jugadores.nombre1);
@@ -40,6 +41,7 @@ void inicializarJuego(Jugadores& jugadores) {
     cout << "Ficha de jugador2 (" << jugadores.ficha2 << ")" << endl;
 }
 
+//Mostrar tablero
 void mostrarTablero(const array<array<Ficha, FILAS>, COLUMNAS>& tablero) {
     cout << "\n====TABLERO====" << endl;
     for (int i=0; i<FILAS; i++) {
@@ -52,6 +54,7 @@ void mostrarTablero(const array<array<Ficha, FILAS>, COLUMNAS>& tablero) {
     cout << "===============\n|0|1|2|3|4|5|6|\n" << endl;
 }
 
+//Comprobar si una columna seleccionada esta dentro del rango y hay espacio
 bool comprobarPos(const array<array<Ficha, FILAS>, COLUMNAS>& tablero, const int& pos) {
     if (pos<0 || pos>6) {
         return false;
@@ -64,6 +67,7 @@ bool comprobarPos(const array<array<Ficha, FILAS>, COLUMNAS>& tablero, const int
     return false;
 }
 
+//Metodo para insertar fichas si esta vacia
 void insertarFicha(array<array<Ficha, FILAS>, COLUMNAS>& tablero, const char& ficha, const int& pos, const int& turno) {
     for (int i=FILAS-1; i>=0; i--) {
         if (tablero.at(pos).at(i).ficha == ' ') {
@@ -74,6 +78,7 @@ void insertarFicha(array<array<Ficha, FILAS>, COLUMNAS>& tablero, const char& fi
     }
 }
 
+//Metodos aux para la comprobacion de la victoria
 bool buscarHorizontal(const array<array<Ficha, FILAS>, COLUMNAS> tablero, const char& ficha, const int& C, const int& F) {
     if (C>3) {
         return false;
@@ -103,6 +108,7 @@ bool buscarDiagonalDerInf(const array<array<Ficha, FILAS>, COLUMNAS> tablero, co
     }
     return false;
 }
+
 bool buscarDiagonalIzqInf(const array<array<Ficha, FILAS>, COLUMNAS> tablero, const char& ficha, const int& C, const int& F) {
     if (F>2 || C<3) {
         return false;
@@ -113,6 +119,7 @@ bool buscarDiagonalIzqInf(const array<array<Ficha, FILAS>, COLUMNAS> tablero, co
     return false;
 }
 
+//Comprobacion victoria
 bool comprobarVictoria(const array<array<Ficha, FILAS>, COLUMNAS> tablero, const char& ficha) {
     for (int i=0; i<FILAS; i++) {
         for (int j=0; j<COLUMNAS; j++) {
@@ -134,6 +141,7 @@ bool comprobarVictoria(const array<array<Ficha, FILAS>, COLUMNAS> tablero, const
     return false;
 }
 
+//Comprobacion derrota
 bool comprobarDerrota(const array<array<Ficha, FILAS>, COLUMNAS>& tablero) {
     for (int j=0; j<COLUMNAS; j++) {
         if (comprobarPos(tablero, j)==true){
@@ -143,6 +151,7 @@ bool comprobarDerrota(const array<array<Ficha, FILAS>, COLUMNAS>& tablero) {
     return true;
 }
 
+//Metodo principal para jugar
 bool turno(array<array<Ficha, FILAS>, COLUMNAS>& tablero, Jugadores& jugadores) {
     int pos=0;
     bool flag = true;
@@ -210,9 +219,9 @@ int main() {
         cin.clear();
         cin.ignore(numeric_limits<streamsize>::max(), '\n');
         if (repetir!=0) {
-            cout << "Programa reiniciado" << endl;
+            cout << "Juego reiniciado" << endl;
         }
     }while (repetir!=0);
-    cout << "Programa finalizado con exito" << endl;
+    cout << "Juego finalizado con exito" << endl;
     return 0;
 }
